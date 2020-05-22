@@ -5,7 +5,7 @@ import cinema.exception.DataProcessingException;
 import cinema.lib.Dao;
 import cinema.model.MovieSession;
 import cinema.util.HibernateUtil;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,15 +15,16 @@ import org.hibernate.query.Query;
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDateTime date) {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session
-                    .createQuery("from MovieSession where showTime > :time AND movie.id = :id")
-                    .setParameter("time", date)
+
+            Query query = session.createQuery("FROM MovieSession "
+                    + "WHERE showTime > :date AND movie.id = :id")
+                    .setParameter("date", date.atStartOfDay())
                     .setParameter("id", movieId);
             List list = query.list();
             transaction.commit();

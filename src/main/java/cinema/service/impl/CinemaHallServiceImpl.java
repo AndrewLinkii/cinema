@@ -7,7 +7,6 @@ import cinema.model.CinemaHall;
 import cinema.service.CinemaHallService;
 import java.util.List;
 
-
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject

@@ -5,7 +5,7 @@ import cinema.lib.Inject;
 import cinema.lib.Service;
 import cinema.model.MovieSession;
 import cinema.service.MovieSessionService;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,7 +19,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDateTime date) {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }

@@ -6,7 +6,6 @@ import cinema.lib.Dao;
 import cinema.model.CinemaHall;
 import cinema.util.HibernateUtil;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -39,20 +38,13 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<CinemaHall> criteriaQuery = criteriaBuilder
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(CinemaHall.class);
             criteriaQuery.from(CinemaHall.class);
-            return session.createQuery(criteriaQuery).list();
+            return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Cant to retrieve all cinema halls", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+            throw new DataProcessingException("Cant to retrieve all cinema halls. ", e);
         }
     }
 }

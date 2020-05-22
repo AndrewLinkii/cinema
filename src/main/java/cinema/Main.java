@@ -7,6 +7,7 @@ import cinema.model.MovieSession;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
@@ -51,7 +52,7 @@ public class Main {
         movie1Session.setCinemaHall(cinemaHall1);
         movieSessionService.add(movie1Session);
 
-        movieSessionService.findAvailableSessions(movie1.getId(), LocalDateTime.of(2020, 6, 1, 2, 55 ))
+        movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.of(2020, 6, 1))
                 .forEach(System.out::println);
     }
 }
