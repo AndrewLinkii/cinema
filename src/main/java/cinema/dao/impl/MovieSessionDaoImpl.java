@@ -26,8 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "WHERE showTime > :date AND movie.id = :id")
                     .setParameter("date", date.atStartOfDay())
                     .setParameter("id", movieId);
-            transaction.commit();
-            return  query.list();
+            return query.list();
         } catch (Exception e) {
             throw new DataProcessingException("cant to find movie sessions by movie ", e);
         } finally {
