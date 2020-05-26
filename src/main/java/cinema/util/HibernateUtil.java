@@ -1,6 +1,5 @@
 package cinema.util;
 
-import cinema.exception.DataProcessingException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
