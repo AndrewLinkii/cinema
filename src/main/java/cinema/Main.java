@@ -1,12 +1,16 @@
 package cinema;
 
+import cinema.exception.AuthenticationException;
 import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.User;
+import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,8 +22,12 @@ public class Main {
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
     private static CinemaHallService cinemaHallService
             = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static UserService userService
+            = (UserService) injector.getInstance(UserService.class);
+    private static AuthenticationService authenticationService =
+            (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
         Movie movie1 = new Movie();
@@ -31,6 +39,13 @@ public class Main {
         movie2.setTitle("POLIKOP");
         movie2.setDescription("CULL");
         movieService.add(movie2);
+
+        User user1 = new User();
+        user1.setLogin("login");
+        user1.setEmail("mail");
+        user1.setPassword("12");
+        userService.add(user1);
+        userService.findByEmail("mail").get();
 
         movieService.getAll().forEach(System.out::println);
 
@@ -54,5 +69,8 @@ public class Main {
 
         movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.of(2020, 6, 1))
                 .forEach(System.out::println);
+
+        System.out.println(authenticationService.login("mail", "12"));
+        System.out.println(authenticationService.register("koop", "user1", "123"));
     }
 }
