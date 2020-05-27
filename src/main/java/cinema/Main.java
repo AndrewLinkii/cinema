@@ -1,12 +1,16 @@
 package cinema;
 
+import cinema.exception.AuthenticationException;
 import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.User;
+import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,8 +22,12 @@ public class Main {
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
     private static CinemaHallService cinemaHallService
             = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static UserService userService
+            = (UserService) injector.getInstance(UserService.class);
+    private static AuthenticationService authenticationService =
+            (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
         Movie movie1 = new Movie();
@@ -32,19 +40,17 @@ public class Main {
         movie2.setDescription("CULL");
         movieService.add(movie2);
 
-        movieService.getAll().forEach(System.out::println);
+        User user1 = authenticationService.register("lol@gmail", "ande","123");
 
         CinemaHall cinemaHall1 = new CinemaHall();
         cinemaHall1.setCapacity(40);
-        cinemaHall1.setDescription("1");
+        cinemaHall1.setDescription("red");
         cinemaHallService.add(cinemaHall1);
 
         CinemaHall cinemaHall2 = new CinemaHall();
         cinemaHall2.setCapacity(30);
-        cinemaHall2.setDescription("2");
+        cinemaHall2.setDescription("ble");
         cinemaHallService.add(cinemaHall2);
-
-        cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession movie1Session = new MovieSession();
         movie1Session.setShowTime(LocalDateTime.of(2020, 6, 1, 8, 55));
@@ -54,5 +60,7 @@ public class Main {
 
         movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.of(2020, 6, 1))
                 .forEach(System.out::println);
+
+        System.out.println(authenticationService.login("lol@gmail", "123"));
     }
 }

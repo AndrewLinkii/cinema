@@ -1,48 +1,46 @@
 package cinema.dao.impl;
 
-import cinema.dao.CinemaHallDao;
+import cinema.dao.UserDao;
 import cinema.exception.DataProcessingException;
 import cinema.lib.Dao;
-import cinema.model.CinemaHall;
+import cinema.model.User;
 import cinema.util.HibernateUtil;
-import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class CinemaHallDaoImpl implements CinemaHallDao {
-
+public class UserDaoImpl implements UserDao {
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
+    public User add(User user) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Long cinemaHallId = (Long) session.save(cinemaHall);
-            cinemaHall.setId(cinemaHallId);
+            session.save(user);
             transaction.commit();
-            return cinemaHall;
+            return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Cant add cinema hall to DB", e);
+            throw new DataProcessingException("There was an error inserting "
+                    + user, e);
         } finally {
-            if (session != null) {
-                session.close();
-            }
+            session.close();
         }
     }
 
     @Override
-    public List<CinemaHall> getAll() {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("from CinemaHall", CinemaHall.class);
-            return query.list();
+            Query<User> query = session.createQuery("from User where email = :email", User.class);
+            query.setParameter("email", email);
+            return Optional.ofNullable(query.uniqueResult());
         } catch (Exception e) {
-            throw new DataProcessingException("Cant to retrieve all cinema halls. ", e);
+            throw new DataProcessingException("Can't find user s by login ", e);
         }
     }
 }
