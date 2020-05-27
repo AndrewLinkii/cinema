@@ -5,11 +5,13 @@ import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.ShoppingCart;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +28,8 @@ public class Main {
             = (UserService) injector.getInstance(UserService.class);
     private static AuthenticationService authenticationService =
             (AuthenticationService) injector.getInstance(AuthenticationService.class);
+    private static final ShoppingCartService shoppingCartService =
+            (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
@@ -39,8 +43,6 @@ public class Main {
         movie2.setTitle("POLIKOP");
         movie2.setDescription("CULL");
         movieService.add(movie2);
-
-        User user1 = authenticationService.register("lol@gmail", "ande","123");
 
         CinemaHall cinemaHall1 = new CinemaHall();
         cinemaHall1.setCapacity(40);
@@ -60,7 +62,10 @@ public class Main {
 
         movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.of(2020, 6, 1))
                 .forEach(System.out::println);
+        User user1 = authenticationService.register("lol@gmail", "ande", "123");
 
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user1);
+        shoppingCartService.addSession(movie1Session, user1);
         System.out.println(authenticationService.login("lol@gmail", "123"));
     }
 }
