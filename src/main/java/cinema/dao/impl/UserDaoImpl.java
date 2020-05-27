@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("email", email);
             return Optional.ofNullable(query.uniqueResult());
         } catch (Exception e) {
-            throw new DataProcessingException("cant to find user s by login ", e);
+            throw new DataProcessingException("Can't find user s by login ", e);
         }
     }
 }

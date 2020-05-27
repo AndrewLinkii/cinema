@@ -25,7 +25,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("id", movieId);
             return query.list();
         } catch (Exception e) {
-            throw new DataProcessingException("cant to find movie sessions by movie ", e);
+            throw new DataProcessingException("Can't  to find movie sessions by movie ", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -48,7 +48,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("cant to add movie session to DB", e);
+            throw new DataProcessingException("Can't add movie session to DB", e);
         } finally {
             if (session != null) {
                 session.close();

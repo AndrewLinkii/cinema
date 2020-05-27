@@ -40,26 +40,17 @@ public class Main {
         movie2.setDescription("CULL");
         movieService.add(movie2);
 
-        User user1 = new User();
-        user1.setLogin("login");
-        user1.setEmail("mail");
-        user1.setPassword("12");
-        userService.add(user1);
-        userService.findByEmail("mail").get();
-
-        movieService.getAll().forEach(System.out::println);
+        User user1 = authenticationService.register("lol@gmail", "ande","123");
 
         CinemaHall cinemaHall1 = new CinemaHall();
         cinemaHall1.setCapacity(40);
-        cinemaHall1.setDescription("1");
+        cinemaHall1.setDescription("red");
         cinemaHallService.add(cinemaHall1);
 
         CinemaHall cinemaHall2 = new CinemaHall();
         cinemaHall2.setCapacity(30);
-        cinemaHall2.setDescription("2");
+        cinemaHall2.setDescription("ble");
         cinemaHallService.add(cinemaHall2);
-
-        cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession movie1Session = new MovieSession();
         movie1Session.setShowTime(LocalDateTime.of(2020, 6, 1, 8, 55));
@@ -70,7 +61,6 @@ public class Main {
         movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.of(2020, 6, 1))
                 .forEach(System.out::println);
 
-        System.out.println(authenticationService.login("mail", "12"));
-        System.out.println(authenticationService.register("koop", "user1", "123"));
+        System.out.println(authenticationService.login("lol@gmail", "123"));
     }
 }

@@ -2,11 +2,13 @@ package cinema.service.impl;
 
 import cinema.exception.AuthenticationException;
 import cinema.lib.Inject;
+import cinema.lib.Service;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.UserService;
 import cinema.util.HashUtil;
 
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private static UserService userService;
