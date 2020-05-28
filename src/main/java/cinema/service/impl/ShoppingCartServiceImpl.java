@@ -38,4 +38,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setOrderDate(LocalDateTime.now().plusHours(3));
         shoppingCartDao.add(shoppingCart);
     }
+
+    @Override
+    public void clear(ShoppingCart shoppingCart) {
+        shoppingCart.getTickets().clear();
+        shoppingCartDao.update(shoppingCart);
+    }
 }
