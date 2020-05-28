@@ -9,6 +9,7 @@ import cinema.model.ShoppingCart;
 import cinema.model.Ticket;
 import cinema.model.User;
 import cinema.service.ShoppingCartService;
+import java.time.LocalDateTime;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -33,6 +34,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void registerNewShoppingCart(User user) {
-        shoppingCartDao.add(new ShoppingCart(user));
+        ShoppingCart shoppingCart = new ShoppingCart(user);
+        shoppingCart.setOrderDate(LocalDateTime.now().plusHours(3));
+        shoppingCartDao.add(shoppingCart);
     }
 }

@@ -5,7 +5,6 @@ import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
-import cinema.model.ShoppingCart;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
@@ -13,7 +12,6 @@ import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
@@ -35,7 +33,7 @@ public class Main {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
         Movie movie1 = new Movie();
-        movie1.setTitle("ABRACADABRA");
+        movie1.setTitle("titan");
         movie1.setDescription("NORM");
         movieService.add(movie1);
 
@@ -60,12 +58,10 @@ public class Main {
         movie1Session.setCinemaHall(cinemaHall1);
         movieSessionService.add(movie1Session);
 
-        movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.of(2020, 6, 1))
-                .forEach(System.out::println);
         User user1 = authenticationService.register("lol@gmail", "ande", "123");
 
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(user1);
         shoppingCartService.addSession(movie1Session, user1);
+        System.out.println(shoppingCartService.getByUser(user1));
         System.out.println(authenticationService.login("lol@gmail", "123"));
     }
 }
