@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             return session.get(User.class, userId);
         } catch (HibernateException e) {
-            throw new RuntimeException("can't get all movies entity", e);
+            throw new DataProcessingException("can't get by id user", e);
         }
     }
 }

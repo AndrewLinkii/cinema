@@ -65,8 +65,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             return session.get(MovieSession.class, movieSessionId);
         } catch (HibernateException e) {
-            throw new RuntimeException("can't get movie session entity with id: "
-                    + movieSessionId);
+            throw new DataProcessingException("Can't get movieSession by id " + e);
         }
     }
 }

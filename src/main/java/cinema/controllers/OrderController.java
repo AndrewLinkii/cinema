@@ -1,6 +1,7 @@
 package cinema.controllers;
 
 import cinema.model.User;
+import cinema.model.dto.request.OrderRequestDto;
 import cinema.model.dto.response.OrderResponseDto;
 import cinema.model.mapper.OrderMapper;
 import cinema.service.OrderService;
@@ -32,8 +33,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public void completeOrder(@RequestBody Long userId) {
-        User user = userService.getById(userId);
+    public void completeOrder(@RequestBody OrderRequestDto order) {
+        User user = userService.getById(order.getUserId());
         orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
     }
 

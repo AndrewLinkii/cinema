@@ -24,3 +24,7 @@ public class UserController {
         return userMapper.toDto(userService.findByEmail(email).get());
     }
 }
+
+
+
+
