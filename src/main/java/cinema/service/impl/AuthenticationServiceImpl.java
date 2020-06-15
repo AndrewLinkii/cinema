@@ -6,33 +6,36 @@ import cinema.service.AuthenticationService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.util.HashUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-
-    @Autowired
-    private static UserService userService;
-
-    @Autowired
+    private UserService userService;
     private ShoppingCartService shoppingCartService;
+    private HashUtil hashUtil;
+
+    public AuthenticationServiceImpl(UserService userService,
+                                     ShoppingCartService shoppingCartService,
+                                     HashUtil hashUtil) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+        this.hashUtil = hashUtil;
+    }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
         return userService.findByEmail(email).filter(u -> u.getPassword()
-                .equals(HashUtil.hashPassword(password, u.getSalt())))
+                .equals(hashUtil.hashPassword(password, u.getSalt())))
                 .orElseThrow(() -> new AuthenticationException("incorrect email or password!"));
     }
 
     @Override
-    public User register(String email, String login, String password)
-            throws AuthenticationException {
+    public User register(String email, String login, String password) {
         User user = new User();
         user.setEmail(email);
         user.setLogin(login);
-        user.setSalt(HashUtil.getSalt());
-        user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
+        user.setSalt(hashUtil.getSalt());
+        user.setPassword(hashUtil.hashPassword(password, user.getSalt()));
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
         return user;
