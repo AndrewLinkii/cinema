@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class HashUtil {
     private static Logger logger = Logger.getLogger(HashUtil.class);
 
-    public  byte[] getSalt() {
+    public byte[] getSalt() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[16];
         secureRandom.nextBytes(salt);

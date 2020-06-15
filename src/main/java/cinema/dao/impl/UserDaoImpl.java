@@ -4,7 +4,6 @@ import cinema.dao.UserDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.User;
 import java.util.Optional;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -56,5 +55,6 @@ public class UserDaoImpl implements UserDao {
             return session.get(User.class, userId);
         } catch (HibernateException e) {
             throw new RuntimeException("can't get all movies entity", e);
-        }    }
+        }
+    }
 }

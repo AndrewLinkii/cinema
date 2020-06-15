@@ -1,6 +1,5 @@
 package cinema.controllers;
 
-
 import cinema.exception.AuthenticationException;
 import cinema.model.dto.request.UserRequestDto;
 import cinema.service.AuthenticationService;

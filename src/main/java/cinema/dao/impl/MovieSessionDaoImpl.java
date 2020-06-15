@@ -5,7 +5,6 @@ import cinema.exception.DataProcessingException;
 import cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

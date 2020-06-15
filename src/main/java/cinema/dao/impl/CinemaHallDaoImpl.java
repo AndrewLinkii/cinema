@@ -56,7 +56,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = sessionFactory.openSession()) {
             return session.get(CinemaHall.class, cinemaHallId);
         } catch (HibernateException e) {
-            throw new RuntimeException("can't get cinema hall with id "+ cinemaHallId);
+            throw new RuntimeException("can't get cinema hall with id " + cinemaHallId);
         }
     }
 }

@@ -1,6 +1,5 @@
 package cinema.controllers;
 
-
 import cinema.model.dto.request.CinemaHallRequestDto;
 import cinema.model.dto.response.CinemaHallResponseDto;
 import cinema.model.mapper.CinemaHallMapper;
