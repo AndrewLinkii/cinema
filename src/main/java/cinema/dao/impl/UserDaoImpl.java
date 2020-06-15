@@ -4,6 +4,8 @@ import cinema.dao.UserDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.User;
 import java.util.Optional;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -47,4 +49,12 @@ public class UserDaoImpl implements UserDao {
             throw new DataProcessingException("Can't find user s by login ", e);
         }
     }
+
+    @Override
+    public User getById(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, userId);
+        } catch (HibernateException e) {
+            throw new RuntimeException("can't get all movies entity", e);
+        }    }
 }
