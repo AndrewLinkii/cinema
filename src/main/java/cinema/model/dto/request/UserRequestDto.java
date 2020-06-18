@@ -1,16 +1,29 @@
 package cinema.model.dto.request;
 
-public class UserRequestDto {
-    private String email;
-    private String password;
-    private String login;
+import cinema.validation.EmailConstraint;
+import cinema.validation.PasswordsMatch;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-    public String getLogin() {
-        return login;
+@PasswordsMatch(
+        password = "password",
+        repeatPassword = "repeatPassword"
+)
+public class UserRequestDto {
+    @EmailConstraint
+    private String email;
+    @NotNull
+    @Size(min = 5, message = "Password should contains 5 or more symbols")
+    private String password;
+    @NotNull
+    private String repeatPassword;
+
+    public String getRepeatPassword() {
+        return repeatPassword;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 
     public String getEmail() {
