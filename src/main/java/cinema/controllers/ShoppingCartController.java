@@ -1,5 +1,6 @@
 package cinema.controllers;
 
+import cinema.model.User;
 import cinema.model.dto.response.ShoppingCartResponseDto;
 import cinema.model.mapper.ShoppingCartMapper;
 import cinema.service.MovieSessionService;
@@ -33,15 +34,15 @@ public class ShoppingCartController {
 
     @GetMapping("/by-user")
     public ShoppingCartResponseDto getByUser(Authentication authentication) {
-        return shoppingCartMapper.toDto(shoppingCartService
-                .getByUser(userService.findByEmail(((UserDetails) authentication
-                        .getPrincipal()).getUsername()).orElseThrow()));
+        User user = userService.findByEmail(((UserDetails) authentication.getPrincipal())
+                .getUsername()).orElseThrow();
+        return shoppingCartMapper.toDto(shoppingCartService.getByUser(user));
     }
 
     @PostMapping
     public void addMovieSession(Authentication authentication, @RequestParam Long movieSessionId) {
-        shoppingCartService.addSession(movieSessionService.getById(movieSessionId),
-                userService.findByEmail(((UserDetails) authentication.getPrincipal()).getUsername())
-                        .orElseThrow());
+        User user = userService.findByEmail(((UserDetails) authentication.getPrincipal())
+                .getUsername()).orElseThrow();
+        shoppingCartService.addSession(movieSessionService.getById(movieSessionId), user);
     }
 }

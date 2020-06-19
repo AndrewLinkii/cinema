@@ -42,9 +42,9 @@ public class OrderController {
 
     @GetMapping
     public List<OrderResponseDto> getAllOrders(Authentication authentication) {
-        return orderService.getOrderHistory(userService
-                .findByEmail(((UserDetails) authentication.getPrincipal())
-                        .getUsername()).orElseThrow()).stream()
+        User user = userService.findByEmail(((UserDetails) authentication.getPrincipal())
+                .getUsername()).orElseThrow();
+        return orderService.getOrderHistory(user).stream()
                 .map(orderMapper::toDto)
                 .collect(Collectors.toList());
     }
