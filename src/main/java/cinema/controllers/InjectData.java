@@ -47,7 +47,7 @@ public class InjectData {
         movie1.setDescription("NORM");
         movieService.add(movie1);
 
-        User user1 = authenticationService.register("lol@gmail", "ande", "123");
+        User user1 = authenticationService.register("lol@gmail", "ande");
         Movie movie2 = new Movie();
         movie2.setTitle("POLIKOP");
         movie2.setDescription("CULL");

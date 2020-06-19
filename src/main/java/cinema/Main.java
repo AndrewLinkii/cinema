@@ -51,7 +51,7 @@ public class Main {
         movieSessionService.add(movie1Session);
 
         AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
-        User user1 = authenticationService.register("lol@gmail", "ande", "123");
+        User user1 = authenticationService.register("lol@gmail", "ande");
 
         ShoppingCartService shoppingCartService = context.getBean(ShoppingCartService.class);
         shoppingCartService.addSession(movie1Session, user1);
